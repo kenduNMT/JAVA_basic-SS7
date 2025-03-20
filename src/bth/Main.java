@@ -33,15 +33,16 @@ public class Main {
                     displayStudentArray(studentIdArray,studentNameArray,dateOfBirthArray,sexArray,size);
                     break;
                 case 2:
-                    addStudent(studentIdArray, studentNameArray, dateOfBirthArray, sexArray, size, sc);
+                    size = addStudent(studentIdArray, studentNameArray, dateOfBirthArray, sexArray, size, sc);
                     break;
                 case 3:
+                    updateStudent(studentIdArray, studentNameArray, dateOfBirthArray, sexArray, size, sc);
                     break;
                 case 4:
-
+                    size = deleteStudent(studentIdArray, studentNameArray, dateOfBirthArray, sexArray, size, sc);
                     break;
                 case 5:
-
+                    searchStudent(studentNameArray, studentIdArray, dateOfBirthArray, sexArray, size, sc);
                     break;
                 case 0:
                     System.out.println("Bye!");
@@ -76,10 +77,10 @@ public class Main {
     }
 
 
-    public  static void addStudent(String[] studentIdArray , String[] studentNameArray, String[] dateOfBirthArray,boolean[] sexArray,int size, Scanner sc){
-        if (size == studentIdArray.length){
+    public static int addStudent(String[] studentIdArray, String[] studentNameArray, String[] dateOfBirthArray, boolean[] sexArray, int size, Scanner sc) {
+        if (size == studentIdArray.length) {
             System.err.println("------------Mảng đầy ----------------");
-            return;
+            return size;
         }
         while (true) {
             System.out.println("Nhập student Id");
@@ -88,7 +89,19 @@ public class Main {
                 break;
             }
         }
-
+        System.out.println("Nhập tên sinh viên (4-50 ký tự):");
+        while (true) {
+            studentNameArray[size] = sc.nextLine();
+            if (studentNameArray[size].length() >= 4 && studentNameArray[size].length() <= 50) {
+                break;
+            }
+            System.err.println("Tên không hợp lệ, nhập lại.");
+        }
+        System.out.println("Nhập ngày sinh (dd/MM/yyyy):");
+        dateOfBirthArray[size] = sc.nextLine();
+        System.out.println("Nhập giới tính (true - Nam, false - Nữ):");
+        sexArray[size] = Boolean.parseBoolean(sc.nextLine());
+        return ++size;
     }
     private static boolean validateStudentId(String studentId, String[] studentIdArray ,int size){
         String regex = "^SV\\d{3}$";
@@ -105,6 +118,59 @@ public class Main {
             return false;
         }
     }
+    public static void updateStudent(String[] studentIdArray, String[] studentNameArray, String[] dateOfBirthArray, boolean[] sexArray, int size, Scanner sc) {
+        System.out.println("Nhập ID sinh viên cần cập nhật:");
+        String id = sc.nextLine();
+        for (int i = 0; i < size; i++) {
+            if (studentIdArray[i].equals(id)) {
+                System.out.println("Nhập tên mới (nhấn Enter để giữ nguyên):");
+                String newName = sc.nextLine();
+                if (!newName.isEmpty()) {
+                    studentNameArray[i] = newName;
+                }
+                System.out.println("Nhập ngày sinh mới (nhấn Enter để giữ nguyên):");
+                String newDateOfBirth = sc.nextLine();
+                if (!newDateOfBirth.isEmpty()) {
+                    dateOfBirthArray[i] = newDateOfBirth;
+                }
+                System.out.println("Nhập giới tính mới (true - Nam, false - Nữ, nhấn Enter để giữ nguyên):");
+                String newSex = sc.nextLine();
+                if (!newSex.isEmpty()) {
+                    sexArray[i] = Boolean.parseBoolean(newSex);
+                }
+                System.out.println("Cập nhật thành công!");
+                return;
+            }
+        }
+        System.err.println("Không tìm thấy sinh viên.");
+    }
 
+    public static int deleteStudent(String[] studentIdArray, String[] studentNameArray, String[] dateOfBirthArray, boolean[] sexArray, int size, Scanner sc) {
+        System.out.println("Nhập ID sinh viên cần xóa:");
+        String id = sc.nextLine();
+        for (int i = 0; i < size; i++) {
+            if (studentIdArray[i].equals(id)) {
+                for (int j = i; j < size - 1; j++) {
+                    studentIdArray[j] = studentIdArray[j + 1];
+                    studentNameArray[j] = studentNameArray[j + 1];
+                    dateOfBirthArray[j] = dateOfBirthArray[j + 1];
+                    sexArray[j] = sexArray[j + 1];
+                }
+                System.out.println("Xóa sinh viên thành công");
+                return --size;
+            }
+        }
+        System.err.println("Không tìm thấy sinh viên.");
+        return size;
+    }
 
+    public static void searchStudent(String[] studentNameArray, String[] studentIdArray, String[] dateOfBirthArray, boolean[] sexArray, int size, Scanner sc) {
+        System.out.println("Nhập tên sinh viên cần tìm:");
+        String name = sc.nextLine();
+        for (int i = 0; i < size; i++) {
+            if (studentNameArray[i].contains(name)) {
+                System.out.println("Tìm thấy sinh viên: " + studentNameArray[i]);
+            }
+        }
+    }
 }
