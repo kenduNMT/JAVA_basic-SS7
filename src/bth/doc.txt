@@ -1,0 +1,20 @@
+Đề bài :
+ Xây dựng menu quan lý thông tin sinh viên gồm : ID, Name, DateOfBirth, Sex
+ String[] idStudents;
+ String[] nameStudents;
+ String[] dateOfBirthStudents;
+ boolean[] sexStudents;
+
+ Gồm các chức năng
+ 1. Hiển thị danh sách
+ 2. Thêm mới
+ 3. Cập nhật thông tin
+ 4. Xóa
+ 5. Tìm kiếm theo tên
+ 0. Thoát
+
+ Trong do :
+ id ko trùng lặp : chuỗi có 5 ki tu : băt đầu bằng chữ SV và tiếp theo là 3 kí tự số
+ Name : ko đc để trống, độ dài từ 4 - 50 kí tự
+ DateOfBirth: định dạng dd/MM/yyyy
+ sex : true - Nam, false - Nữ
